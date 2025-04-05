@@ -61,10 +61,37 @@
             <div class="menu-title">Quản lý nhập hàng</div>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/baocaothongke">
-            <div class="parent-icon"></div>
+        <li class="nav-item dropdown">
+          <a href="javascript:;" class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-bs-toggle="dropdown">
+            <div class="parent-icon">
+            </div>
             <div class="menu-title">Báo cáo thống kê</div>
+          </a>
+          <ul class="dropdown-menu">
+            <li> <a class="dropdown-item" href="/baocaothongke/doanhso"><i class="bx bx-right-arrow-alt"></i>Doanh số</a>
+            </li>
+            <li> <a class="dropdown-item" href="/quanlydonhang/nguoidung"><i class="bx bx-right-arrow-alt"></i>Người dùng</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="javascript:;" class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-bs-toggle="dropdown">
+            <div class="parent-icon">
+            </div>
+            <div class="menu-title">Quản lý danh mục</div>
+          </a>
+          <ul class="dropdown-menu">
+            <li> <a class="dropdown-item" href="/qldm/qldmsp"><i class="bx bx-right-arrow-alt"></i>Quản lý danh mục sản phẩm</a>
+            </li>
+            <li> <a class="dropdown-item" href="/qldm/qldmdd"><i class="bx bx-right-arrow-alt"></i>Quản lý danh mục địa điểm</a>
+            </li>
+          </ul>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="/quanlynhacungcap">
+            <div class="parent-icon"></div>
+            <div class="menu-title">Quản lý nhà cung cấp</div>
           </a>
         </li>
       </ul>
