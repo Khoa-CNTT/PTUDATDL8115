@@ -22,8 +22,6 @@ import "../../assets/assets/plugins/metismenu/js/metisMenu.min.js";
 import "../../assets/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js";
 import "../../assets/assets/js/index.js";
 import "../../assets/assets/plugins/apexcharts-bundle/js/apex-custom.js";
-import "../../assets/assets/plugins/apexcharts-bundle/js/apexcharts.min.js";
-import "../../assets/assets/plugins/apexcharts-bundle/js/apexcharts.js";
 import "../../assets/assets/js/app.js";
 import TopRocker from "../components/TopRocker.vue";
 import MenuRocker from "../components/MenuRocker.vue";

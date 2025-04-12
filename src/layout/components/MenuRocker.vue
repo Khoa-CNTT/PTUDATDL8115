@@ -61,18 +61,11 @@
             <div class="menu-title">Quản lý nhập hàng</div>
           </a>
         </li>
-        <li class="nav-item dropdown">
-          <a href="javascript:;" class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-bs-toggle="dropdown">
-            <div class="parent-icon">
-            </div>
-            <div class="menu-title">Báo cáo thống kê</div>
+        <li class="nav-item">
+          <a class="nav-link" href="/baocaothongke">
+            <div class="parent-icon"></div>
+            <div class="menu-title">Báo Cáo Thống Kê</div>
           </a>
-          <ul class="dropdown-menu">
-            <li> <a class="dropdown-item" href="/baocaothongke/doanhso"><i class="bx bx-right-arrow-alt"></i>Doanh số</a>
-            </li>
-            <li> <a class="dropdown-item" href="/quanlydonhang/nguoidung"><i class="bx bx-right-arrow-alt"></i>Người dùng</a>
-            </li>
-          </ul>
         </li>
         <li class="nav-item dropdown">
           <a href="javascript:;" class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-bs-toggle="dropdown">
@@ -92,6 +85,18 @@
           <a class="nav-link" href="/quanlynhacungcap">
             <div class="parent-icon"></div>
             <div class="menu-title">Quản lý nhà cung cấp</div>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/quanlydanhgia">
+            <div class="parent-icon"></div>
+            <div class="menu-title">Quản lý đánh giá</div>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/quanlythanhtoan">
+            <div class="parent-icon"></div>
+            <div class="menu-title">Quản lý thanh toán</div>
           </a>
         </li>
       </ul>

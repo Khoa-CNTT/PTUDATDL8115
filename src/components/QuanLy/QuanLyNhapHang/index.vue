@@ -161,128 +161,138 @@
     </div>
     <!-- Nhập Hàng -->
     <div class="modal fade" id="nhaphang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thông tin nhập hàng</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="card-header d-flex align-items-center">
-                                    <i class="fa-solid fa-circle-info me-2"></i>
-                                    <h5>Thông tin</h5>
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content p-3">
+            <div class="modal-header">
+                <h5 class="modal-title">Thông tin nhập hàng</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <!-- Thông tin bên trái -->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>Thông tin</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label>Nhà cung cấp</label>
+                                    <select class="form-control">
+                                        <option>Nhà cung cấp 1</option>
+                                        <option>Nhà cung cấp 2</option>
+                                    </select>
                                 </div>
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center justify-content-between  mb-2">
-                                        <label for="" class="align-items-center me-2">Nhà cung cấp</label>
-                                        <div>
-                                            <select name="" id="" class="form-control " style="width:300px">
-                                                <option value="1">Nhà cung cấp 1</option>
-                                                <option value="2">Nhà cung cấp 2</option>
-                                            </select>
-                                        </div>
-
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between  mb-2">
-                                        <label for="" class="align-items-center me-2">Địa chỉ nhập hàng</label>
-                                        <div>
-                                            <input type="text" name="" id="" class="form-control " style="width:300px">
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between  mb-2">
-                                        <label for="" class="align-items-center me-2 ">Số điện thoại</label>
-                                        <div>
-                                            <input type="number" name="" id="" class="form-control " style="width:300px">
-                                        </div>
-                                    </div>
-                                    <div class="d-flex  justify-content-between mb-2">
-                                        <label for="" class="align-items-center me-2">Ghi chú</label>
-                                        <textarea name="" rows="3" class="form-control " style="width:300px"></textarea>
-                                    </div>
+                                <div class="mb-3">
+                                    <label>Địa chỉ nhập hàng</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label>Số điện thoại</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label>Ghi chú</label>
+                                    <textarea rows="2" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="card-header d-flex align-items-center ">
-                                    <i class="fa-solid fa-money-bill me-2"></i>
-                                    <h5>Phương thức thanh toán</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center justify-content-between  mb-2">
-                                        <label for="" class="align-items-center me-2">Phương thức</label>
-                                        <div>
-                                            <select name="" id="" class="form-control " style="width:300px">
-                                                <option value="1">Chuyển khoản</option>
-                                                <option value="2">Tiền mặt</option>
-                                            </select>
-                                        </div>
+                    </div>
 
-                                    </div>
-                                    
+                    <!-- Thêm sản phẩm và thanh toán bên phải -->
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <strong>Thêm sản phẩm</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-2">
+                                    <label>Sản phẩm</label>
+                                    <select class="form-control">
+                                        <option>Khăn choàng</option>
+                                        <option>Áo thun đen</option>
+                                        <option>Áo khoác</option>
+                                    </select>
                                 </div>
-                                <div class="card-footer">
-                                        <div class="d-flex align-items-center justify-content-between  mb-2">
-                                            <h4 class="align-items-center me-2 ">Tổng Tiền</h4>
-                                            <div>
-                                                <h4>6.000.000</h4>
-                                            </div>
-                                        </div>
-                                    </div>  
+                                <div class="mb-2">
+                                    <label>Số lượng</label>
+                                    <input type="number" class="form-control">
+                                </div>
+                                <div class="mb-2 d-flex justify-content-between">
+                                    <label>Đơn giá</label>
+                                    <p class="fw-bold">200.000</p>
+                                </div>
+                                <div class="text-end">
+                                    <button class="btn btn-primary">Thêm sản phẩm</button>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>Thanh toán</strong>
+                            </div>
+                            <div class="card-body">
+                                <label>Phương thức</label>
+                                <select class="form-control mb-2">
+                                    <option>Chuyển khoản</option>
+                                    <option>Tiền mặt</option>
+                                </select>
+                                <h5 class="text-end">TỔNG TIỀN: <strong>6.000.000</strong></h5>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <table class="table table-bordered table-hover text-center">
-                                <thead class="bg-secondary">
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Tên Sản Phẩm</th>
-                                        <th>Sản Lượng</th>
-                                        <th>Đơn Giá</th>
-                                        <th>Thành Tiền</th>
-                                    </tr>
-                                </thead>
+                </div>
 
-                                <tbody>
-                                    <tr>
-                                        <th>1</th>
-                                        <th>Khăn Choàng</th>
-                                        <th>2</th>
-                                        <th>200.000</th>
-                                        <th>400.000</th>
-                                    </tr>
-
-                                    <tr>
-                                        <th>2</th>
-                                        <th>Áo Thun Đen</th>
-                                        <th>1</th>
-                                        <th>200.000</th>
-                                        <th>200.000</th>
-                                    </tr>
-
-                                    <tr>
-                                        <th>3</th>
-                                        <th>Giày Thu Đông</th>
-                                        <th>1</th>
-                                        <th>160.000</th>
-                                        <th>160.000</th>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                <!-- Danh sách sản phẩm -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered text-center">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Tên Sản Phẩm</th>
+                                    <th>Số Lượng</th>
+                                    <th>Đơn giá</th>
+                                    <th>Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Khăn choàng</td>
+                                    <td>2</td>
+                                    <td>200.000</td>
+                                    <td>400.000</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Áo thun đen</td>
+                                    <td>2</td>
+                                    <td>150.000</td>
+                                    <td>300.000</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Áo khoác</td>
+                                    <td>1</td>
+                                    <td>350.000</td>
+                                    <td>350.000</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success">Xác Nhận</button>
-                </div>
+
+            </div>
+            <div class="modal-footer justify-content-end">
+                <button class="btn btn-success">Nhập hàng</button>
             </div>
         </div>
     </div>
+</div>
+
 </template>
 <script>
 export default {

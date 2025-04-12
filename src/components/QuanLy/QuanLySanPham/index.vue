@@ -1,15 +1,11 @@
 <template>
-    <div class="container mt-5 mb-5">
-        <div class="header">
-            <h1>Danh sách sản phẩm</h1>
-            <div class="flex items-center">
-                <label for="search" class="text-teal-500 mr-2" style="font-size: 25px;">Search:</label>
-                <input class="search" type="text" id="search" v-model="searchTerm" placeholder="Tìm kiếm tên...">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-5">
-                <div class="card">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Quản lý sản phẩm</h2>
+                </div>
+                <div class="card-body">
                     <div class="mt-3">
                         <label>Mã sản phẩm:</label>
                         <input type="text" v-model="san_pham.ma_san_pham">
@@ -35,38 +31,165 @@
                         <input type="text" v-model="san_pham.hinh_anh">
                     </div>
                     <div class="mt-3">
-                        <label>Mô tả:</label>
-                        <textarea v-model="san_pham.mo_ta"></textarea>
-                    </div>
-                    <div class="card-actions d-flex justify-content-around">
-                        <button type="button" v-on:click="them_san_pham">Thêm</button>
-                        <button type="button" v-on:click="sua_san_pham" v-if="danh_muc_can_xoa !== null">Sửa</button>
-                        <button type="button" v-on:click="xoa_san_pham" v-if="danh_muc_can_xoa !== null">Xóa</button>
+                        <label style="vertical-align: top;">Mô tả:</label>
+                        <textarea v-model="san_pham.mo_ta" style="height: 140px;"></textarea>
                     </div>
                 </div>
+                <div class="d-flex flex-row-reverse">
+                    <button class="btn " type="button" v-on:click="them_san_pham">Thêm</button>
+                </div>
             </div>
-            <div class="col-lg-7">
-                <div class="card">
-                    <div class="row">
-                        <div class="col-lg-6 mt-3" v-for="(value, index) in lists_san_pham" :key="index">
-                            <div class="card" @click="chon_san_pham(index)">
-                                <img v-bind:src="value.hinh_anh" class="img-fluid" alt="">
-                                <div class="d-flex justify-content-between mt-3">
-                                    <h3 class="h3">{{ value.ten_san_pham }}</h3>
-                                    <span class="sao badge custom-badge">
-                                        {{ value.sao }}
-                                        <i class="fa-solid fa-star ms-2"></i>
-                                    </span>
+        </div>
+        <div class="col-lg-8">
+            <div class="flex d-flex flex-row-reverse">
+                <input class="search" type="text" id="search" v-model="searchTerm" placeholder="Tìm kiếm tên...">
+                <label for="search" class="text-teal-500 mr-2" style="font-size: 25px;">Search:</label>
+            </div>
+            <div class="list-product layout-spacing">
+                <div class="widget-content widget-content-area br-6">
+                    <div id="alter_pagination_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                        <div class="table-responsive bg-white">
+                            <table id="alter_pagination" class="table table-hover dataTable" style="width: 100%;"
+                                role="grid" aria-describedby="alter_pagination_info">
+                                <thead class="thead-light">
+                                    <tr role="row">
+                                        <th class="text-center" style="width: 1px;">STT</th>
+                                        <th class="text-center" style="width: 200px;">Tên sản phẩm</th>
+                                        <th class="text-center" style="width: 110px;">Hình ảnh</th>
+                                        <th class="text-center" style="width: 90px;">Số lượng</th>
+                                        <th class="text-center" style="width: 130px;">Đơn giá</th>
+                                        <th class="text-center" style="width: 60px;">Điểm</th>
+                                        <th class="text-center" style="width: 100px;">Danh mục</th>
+                                        <th class="text-center" style="width: 101px;">Nhà cung cấp</th>
+                                        <th class="text-center" style="width: 300px;">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr role="row" v-for="(value, index) in paginatedSanPham" :key="index">
+                                        <td class="sorting_1">{{ index + 1 + (currentPage - 1) * itemsPerPage }}
+                                        </td>
+                                        <td>{{ value.ten_san_pham }}</td>
+                                        <td><img v-bind:src="value.hinh_anh" class="" alt=""
+                                                style="max-width: 100px;max-height: 100px; height: 100px;border-radius: 10px;">
+                                        </td>
+                                        <td>{{ value.so_luong }}</td>
+                                        <td>{{ value.gia }} đ</td>
+                                        <td>{{ value.sao }}</td>
+                                        <td>{{ value.danh_muc }}</td>
+                                        <td>{{ value.nha_cung_cap }}</td>
+                                        <td>
+                                            <div class="d-flex justify-content-center">
+                                                <button type="button" class="btn btn-warning me-2"
+                                                    data-bs-toggle="modal" data-bs-target="#exampleModal">Chinh
+                                                    sua</button>
+                                                <button type="button" class="btn btn-danger"
+                                                    v-on:click="xoa_san_pham(index)">Xoá</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="dt--bottom-section d-sm-flex justify-content-sm-between text-center mt-3">
+                            <div class="dt--pages-count mb-sm-0 mb-3">
+                                <div class="dataTables_info" role="status" aria-live="polite">
+                                    Trang {{ currentPage }} / {{ totalPages }}
                                 </div>
-                                <span class="mota mt-3">{{ value.mo_ta }}</span>
-                                <div class="d-flex justify-content-between mt-3">
-                                    <span class="price badge custom-badge">{{ value.gia }}</span>
-                                    <span class="soluong badge custom-badge ">SL :{{ value.so_luong }}
-                                    </span>
+                            </div>
+                            <div class="dt--pagination">
+                                <div class="dataTables_paginate paging_full_numbers">
+                                    <ul class="pagination">
+
+                                        <!-- Nút về đầu -->
+                                        <li class="paginate_button page-item" :class="{ disabled: currentPage === 1 }">
+                                            <a href="#" class="page-link" @click.prevent="currentPage = 1">
+                                                <i class="fa-solid fa-angles-left"></i>
+                                            </a>
+                                        </li>
+
+                                        <!-- Nút trước -->
+                                        <li class="paginate_button page-item" :class="{ disabled: currentPage === 1 }">
+                                            <a href="#" class="page-link" @click.prevent="currentPage--">
+                                                <i class="fa-solid fa-angle-left"></i>
+                                            </a>
+                                        </li>
+
+                                        <!-- Các trang -->
+                                        <li class="paginate_button page-item" v-for="page in totalPages" :key="page"
+                                            :class="{ active: page === currentPage }">
+                                            <a href="#" class="page-link" @click.prevent="currentPage = page">{{
+                                                page }}</a>
+                                        </li>
+
+                                        <!-- Nút sau -->
+                                        <li class="paginate_button page-item"
+                                            :class="{ disabled: currentPage === totalPages }">
+                                            <a href="#" class="page-link" @click.prevent="currentPage++">
+                                                <i class="fa-solid fa-angle-right"></i>
+                                            </a>
+                                        </li>
+
+                                        <!-- Nút cuối -->
+                                        <li class="paginate_button page-item"
+                                            :class="{ disabled: currentPage === totalPages }">
+                                            <a href="#" class="page-link" @click.prevent="currentPage = totalPages">
+                                                <i class="fa-solid fa-angles-right"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thông tin sản phẩm</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Mã sản phẩm</label>
+                        <input type="text" class="input-text w-full border rounded p-2">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Tên sản phẩm</label>
+                        <input type="text" class="input-text w-full border rounded p-2">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Giá</label>
+                        <input type="text" class="input-text w-full border rounded p-2">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Điểm</label>
+                        <input type="text" class="input-text w-full border rounded p-2">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Số lượng</label>
+                        <input type="text" class="input-text w-full border rounded p-2">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Danh mục</label>
+                        <input type="text" class="input-text w-full border rounded p-2">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Hình ảnh</label>
+                        <input type="text" class="input-text w-full border rounded p-2">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Mô tả</label>
+                        <textarea type="text" class="input-text w-full border rounded p-2"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        style="background-color: #FF2C2C;">Huỷ</button>
+                    <button type="button" class="btn btn-primary" style="background-color: #58D0C1;">Tạo</button>
                 </div>
             </div>
         </div>
@@ -76,12 +199,16 @@
 export default {
     data() {
         return {
+            currentPage: 1,
+            itemsPerPage: 6,
             searchTerm: '', // Dữ liệu tìm kiếm 
             lists_san_pham: [
                 {
                     hinh_anh: "https://pos.nvncdn.com/f4d87e-8901/ps/20241204_SMAM3J8dpt.jpeg",
                     ten_san_pham: "Áo khoác",
                     sao: 200,
+                    danh_muc: "Giải trí",
+                    nha_cung_cap: "Puma",
                     mo_ta: "Áo khoác mùa đông chống gió, giữ ấm tốt.",
                     gia: "200.000",
                     so_luong: 10,
@@ -91,6 +218,8 @@ export default {
                     hinh_anh: "https://img.bitas.com.vn/sanpham/ZGOM.20/NAU/lg1.png",
                     ten_san_pham: "Giày thể thao",
                     sao: 150,
+                    danh_muc: "Giải trí",
+                    nha_cung_cap: "Puma",
                     mo_ta: "Giày thể thao nhẹ, thoáng khí, phù hợp tập luyện.",
                     gia: "350.000",
                     so_luong: 20,
@@ -100,6 +229,8 @@ export default {
                     hinh_anh: "https://kakavietnam.com/wp-content/uploads/2018/03/kk-2070-1.jpg",
                     ten_san_pham: "Balo du lịch",
                     sao: 180,
+                    danh_muc: "Giải trí",
+                    nha_cung_cap: "Puma",
                     mo_ta: "Balo chống nước, phù hợp cho du lịch và công việc.",
                     gia: "500.000",
                     so_luong: 15,
@@ -109,20 +240,80 @@ export default {
                     hinh_anh: "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/x/i/xiaomi_2_1.png",
                     ten_san_pham: "Đồng hồ thông minh",
                     sao: 300,
+                    danh_muc: "Giải trí",
+                    nha_cung_cap: "Puma",
                     mo_ta: "Đồng hồ thông minh với nhiều tính năng sức khỏe.",
                     gia: "1.200.000",
                     so_luong: 8,
                     ma_san_pham: "SP004"  // Mã sản phẩm
                 },
+                {
+                    hinh_anh: "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/x/i/xiaomi_2_1.png",
+                    ten_san_pham: "Đồng hồ thông minh",
+                    sao: 300,
+                    danh_muc: "Giải trí",
+                    nha_cung_cap: "Puma",
+                    mo_ta: "Đồng hồ thông minh với nhiều tính năng sức khỏe.",
+                    gia: "1.200.000",
+                    so_luong: 8,
+                    ma_san_pham: "SP004"  // Mã sản phẩm
+                },
+                {
+                    hinh_anh: "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/x/i/xiaomi_2_1.png",
+                    ten_san_pham: "Đồng hồ thông minh",
+                    sao: 300,
+                    danh_muc: "Giải trí",
+                    nha_cung_cap: "Puma",
+                    mo_ta: "Đồng hồ thông minh với nhiều tính năng sức khỏe.",
+                    gia: "1.200.000",
+                    so_luong: 8,
+                    ma_san_pham: "SP004"  // Mã sản phẩm
+                },
+                {
+                    hinh_anh: "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/x/i/xiaomi_2_1.png",
+                    ten_san_pham: "Đồng hồ thông minh",
+                    sao: 300,
+                    danh_muc: "Giải trí",
+                    nha_cung_cap: "Puma",
+                    mo_ta: "Đồng hồ thông minh với nhiều tính năng sức khỏe.",
+                    gia: "1.200.000",
+                    so_luong: 8,
+                    ma_san_pham: "SP004"  // Mã sản phẩm
+                },
+                {
+                    hinh_anh: "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/x/i/xiaomi_2_1.png",
+                    ten_san_pham: "Đồng hồ thông minh",
+                    sao: 300,
+                    danh_muc: "Giải trí",
+                    nha_cung_cap: "Puma",
+                    mo_ta: "Đồng hồ thông minh với nhiều tính năng sức khỏe.",
+                    gia: "1.200.000",
+                    so_luong: 8,
+                    ma_san_pham: "SP004"  // Mã sản phẩm
+                },
+                {
+                    hinh_anh: "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/x/i/xiaomi_2_1.png",
+                    ten_san_pham: "Đồng hồ thông minh",
+                    sao: 300,
+                    danh_muc: "Giải trí",
+                    nha_cung_cap: "Puma",
+                    mo_ta: "Đồng hồ thông minh với nhiều tính năng sức khỏe.",
+                    gia: "1.200.000",
+                    so_luong: 8,
+                    ma_san_pham: "SP004"  // Mã sản phẩm
+                },
+
             ],
             san_pham: {
-                ma_san_pham: '',
-                hinh_anh: '',
-                ten_san_pham: '',
-                sao: '',
-                mo_ta: '',
-                gia: '',
-                so_luong: ''
+                hinh_anh: "",
+                ten_san_pham: "",
+                sao: "",
+                mo_ta: "",
+                gia: "",
+                so_luong: "",
+                ma_san_pham: "",
+                danh_muc: "",
+                nha_cung_cap: "",
             },
             danh_muc_can_xoa: null,
         };
@@ -133,6 +324,8 @@ export default {
             return this.lists_san_pham.filter(product => {
                 const searchTerm = this.searchTerm.toLowerCase();
 
+
+                // Tìm kiếm theo tên và mã sản phẩm
                 // Hàm normalizeString để loại bỏ dấu
                 const normalizeString = (str) => {
                     // Chuyển chuỗi thành dạng NFD (Normalization Form D), phân tách dấu và ký tự
@@ -147,6 +340,13 @@ export default {
                     normalizeString(product.ma_san_pham).includes(normalizeString(searchTerm)) // Kiểm tra mã sản phẩm
                 );
             });
+        },
+        paginatedSanPham() {
+            const start = (this.currentPage - 1) * this.itemsPerPage;
+            return this.lists_san_pham.slice(start, start + this.itemsPerPage);
+        },
+        totalPages() {
+            return Math.ceil(this.lists_san_pham.length / this.itemsPerPage);
         }
     },
     methods: {
@@ -199,30 +399,64 @@ export default {
 }
 </script>
 <style>
-/* Header chứa tiêu đề và ô tìm kiếm */
-.header {
+/* Quản lý sản phẩm */
+.row .col-lg-4 .card {
+    border-radius: 20px;
+    margin: 0px;
+}
+
+.row .col-lg-4 .card .card-header {
     display: flex;
-    /* Sắp xếp các phần tử theo chiều ngang */
+    background-color: #D9D9D9;
     align-items: center;
-    /* Căn giữa theo chiều dọc */
-    justify-content: space-between;
-    /* Canh trái phải cách đều */
-    margin-bottom: 16px;
-    /* Tạo khoảng cách phía dưới */
+    height: 80px;
 }
 
-/* Tiêu đề trong header */
-.header h1 {
-    font-size: 40px;
-    /* Kích thước chữ */
-    font-weight: 300;
-    /* Độ đậm của chữ */
-    color: #58D0C1;
-    /* Màu xanh teal */
+.row .col-lg-4 .card .card-header h2 {
+    color: rgba(79, 79, 79, 0.44);
+    /* 0.44 nghĩa là 44% */
+    font-weight: bold;
+    font-size: 25px;
 }
 
-/* Nhãn cho ô tìm kiếm */
-.header label {
+.row .col-lg-4 .card .card-body label {
+    width: 25%;
+    text-align: center;
+    align-items: top;
+    margin: 10px 20px 5px 20px;
+    font-size: 17px;
+}
+
+.row .col-lg-4 .card .card-body input,
+textarea {
+    border-radius: 12px;
+    border: 1px solid rgba(79, 79, 79, 0.44);
+    height: 45px;
+    width: 65%;
+    padding: 5px 10px 5px 10px;
+    margin: 5px 0px 5px 0px;
+    font-size: 17px;
+}
+
+.row .col-lg-4 .card .d-flex .btn {
+    background-color: #58D0C1;
+    color: white;
+    margin: 20px;
+    border-radius: 15px;
+    width: 120px;
+    height: 45%;
+    font-size: 20px;
+}
+
+.row .col-lg-8 .flex {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.row .col-lg-8 .flex label {
     color: #58D0C1;
     /* Màu chữ xanh teal */
     margin-right: 8px;
@@ -232,7 +466,7 @@ export default {
 }
 
 /* Ô tìm kiếm */
-.header .flex .search {
+.row .col-lg-8 .flex .search {
     background-color: white;
     /* Nền trắng */
     border: 2px solid #58D0C1;
@@ -247,222 +481,47 @@ export default {
     /* Độ rộng của ô input */
 }
 
-/* Container chứa form nhập liệu */
-.row .col-lg-5 .card {
-    margin-top: 12px;
-    /* Khoảng cách phía trên */
-    border: 1px solid #99f6e4;
-    /* Viền màu xanh nhạt */
-    border-radius: 8px;
-    /* Bo góc */
-    padding: 16px 16px 16px 16px;
-    /* Khoảng cách bên trong */
-    background-color: white;
-    /* Nền trắng */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    /* Đổ bóng nhẹ */
+.row .col-lg-8 .list-product tbody td .d-flex .btn {
+    width: 130px;
+    border-radius: 15px;
 }
 
-/* Nhóm chứa label và input */
-.row .col-lg-5 .card {
-    display: flex;
-    /* Xếp theo chiều ngang */
-    margin-bottom: 12px;
-    /* Khoảng cách giữa các nhóm */
-}
-
-/* Nhãn trong form */
-.row .col-lg-5 .card label {
-    width: 40%;
-    /* Độ rộng cố định cho nhãn */
-    color: #374151;
-    /* Màu xám đậm */
-}
-
-/* Ô nhập liệu và textarea */
-.row .col-lg-5 .card input,
-.row .col-lg-5 .card textarea {
-    flex: 1;
-    width: 60%;
-    /* Độ rộng cố định cho nhãn */
-    /* Giãn đầy phần còn lại */
-    padding: 8px;
-    /* Khoảng cách nội dung bên trong */
-    background-color: #81DBD14C;
-    /* Nền xanh nhạt */
-    border-radius: 6px;
-    /* Bo góc */
-    border: none;
-    /* Không có viền */
-}
-
-/* Nhóm chứa các nút bấm */
-.row .col-lg-5 .card .card-actions {
-    display: flex;
-    /* Xếp theo chiều ngang */
-    padding-top: 16px;
-    /* Khoảng cách phía trên */
-}
-
-/* Nút bấm */
-.row .col-lg-5 .card .card-actions button {
-    padding: 8px 16px;
-    /* Kích thước nút */
-    background-color: #58D0C1;
-    /* Màu nền xanh teal */
-    color: white;
-    /* Màu chữ trắng */
-    border-radius: 10px;
-    /* Bo góc */
-    border: none;
-    /* Không có viền */
-    cursor: pointer;
-    /* Hiển thị con trỏ khi di chuột */
-    width: 20%;
-    /* Độ rộng cố định cho nhãn */
-}
-
-.col-lg-7 .card {
-    background-color: aliceblue;
-    padding: 0px 10px 10px 10px;
-}
-
-.col-lg-7 .card .row .col-lg-6 .card {
-    border: 2px solid #ffffff;
-    /* Viền bo 2px màu đen */
-    border-radius: 10px;
-    /* Bo góc card */
-    padding: 10px;
-    /* Khoảng cách giữa nội dung và viền */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Hiệu ứng bóng nhẹ */
-    height: auto;
-    display: flex;
-    /* Tạo flex container */
-
-}
-
-.col-lg-7 .card .row .col-lg-6 .card .ten_san_pham,
-.col-lg-7 .card .row .col-lg-6 .card .h3 {
-    display: block;
-    /* Chuyển thẻ label thành block element */
-    width: auto;
-    /* Chiều rộng cố định */
-    height: 65px;
-    /* Chiều cao cố định */
-    overflow: hidden;
-    /* Ẩn phần chữ bị tràn ra ngoài */
-    text-overflow: ellipsis;
-    /* Dùng ba dấu chấm nếu chữ quá dài */
-    white-space: normal;
-    /* Cho phép chữ xuống dòng */
-    word-wrap: break-word;
-    /* Đảm bảo chữ xuống dòng đúng nơi, không làm lệch layout */
-    line-height: 1;
-    /* Căn chỉnh khoảng cách giữa các dòng */
-}
-
-.col-lg-7 .card .row .col-lg-6 .card .img-fluid {
-    width: 100%;
-    /* Chiều rộng 100% để hình ảnh co giãn theo card */
-    height: 300px;
-    /* Chiều cao cố định */
-    object-fit: cover;
-    /* Cắt ảnh để vừa với kích thước mà không bị méo */
-    border-radius: 10%;
-    /* Bo góc nhẹ cho đẹp */
-    display: block;
-    /* Đảm bảo hình ảnh là một phần tử khối */
-    margin-bottom: 16px;
-    /* Đảm bảo khoảng cách giữa ảnh và nội dung dưới  */
-    object-fit: contain;
-    /* Giữ nguyên tỷ lệ của ảnh, không bị cắt hoặc méo */
-    object-position: center;
-    /* Đảm bảo ảnh được căn giữa trong khung */
-}
-
-.col-lg-7 .card .row .col-lg-6 .card .div .h3 {
-    justify-content: center;
-    /* Căn giữa theo chiều ngang */
-    height: 500px;
-    /* Chiều cao cố định */
-    display: block;
-    /* Một phần tử khối */
-    align-items: center;
-    /* Căn giữa theo chiều ngang */
-}
-
-.col-lg-7 .card .row .col-lg-6 .card .sao {
-    border: 2px solid aquamarine;
-    /* Viền màu xanh */
-    background-color: white;
-    /* Nền trắng */
-    color: black;
-    /* Chữ màu đen */
-    padding: 5px 15px;
-    /* Khoảng cách giữa viền và chữ */
-    border-radius: 50px;
-    /* Bo góc để tạo hình tròn */
-    display: inline-flex;
-    /* Dùng inline-flex để căn giữa nội dung */
-    justify-content: center;
-    /* Căn giữa theo chiều ngang */
-    align-items: center;
-    /* Căn giữa theo chiều dọc */
+.row .col-lg-8 .list-product tbody td {
     text-align: center;
-    /* Căn giữa chữ trong thẻ */
-    font-size: 18px;
-    /* Độ lớn của chữ */
-    height: 45px;
-    /* Chiều cao cố định */
-
+    vertical-align: middle;
 }
 
-.col-lg-7 .card .row .col-lg-6 .card .sao .fa-solid {
-    color: rgb(218, 218, 73);
-}
-
-.col-lg-7 .card .row .col-lg-6 .card .price {
-    background-color: rgb(189, 189, 11);
-    /* Nền trắng */
-    color: rgb(255, 255, 255);
-    /* Chữ màu trắng */
-    padding: 10px 15px;
-    /* Khoảng cách giữa viền và nội dung */
-    border-radius: 50px;
-    /* Bo góc để tạo hình tròn */
-    display: inline-flex;
-    /* Dùng inline-flex để căn giữa nội dung */
-    justify-content: center;
-    /* Căn giữa theo chiều ngang */
+.modal .modal-dialog .modal-body div {
+    display: flex;
     align-items: center;
-    /* Căn giữa theo chiều dọc */
-    text-align: center;
-    /* Căn giữa chữ trong thẻ */
-    font-size: larger;
-    /* Độ lớn của chữ */
-
+    justify-content: space-between;
 }
 
-.col-lg-7 .card .row .col-lg-6 .card .soluong {
-    border: 2px solid aquamarine;
-    /* Viền màu xanh */
-    background-color: white;
-    /* Nền trắng */
-    color: black;
-    /* Chữ màu đen */
-    padding: 5px 15px;
-    /* Khoảng cách giữa viền và nội dung */
-    border-radius: 10px;
-    /* Bo góc để tạo hình tròn */
-    display: inline-flex;
-    /* Dùng inline-flex để căn giữa nội dung */
-    justify-content: center;
-    /* Căn giữa theo chiều ngang */
+.modal .modal-dialog .modal-body .mb-4 label {
+    display: flex;
+    vertical-align: top;
+    justify-content: space-between;
+    width: 30%;
+}
+
+.modal .modal-dialog .modal-body .mb-4 .input-text {
+    display: flex;
     align-items: center;
-    /* Căn giữa theo chiều dọc */
-    text-align: center;
-    /* Căn giữa chữ trong thẻ */
-    font-size: 18px;
+    justify-content: space-between;
+    width: 70%;
+}
+
+.modal .modal-dialog .modal-body .mb-4 textarea {
+    height: 100px;
+}
+
+.modal .modal-dialog .modal-footer {
+    background-color: #D9D9D9;
+}
+
+.modal .modal-dialog .modal-footer .btn {
+    justify-content: space-between;
+    width: 150px;
+    border-radius: 15px;
 }
 </style>

@@ -38,12 +38,8 @@ const routes = [
         component: ()=>import('../components/QuanLy/QuanLyBaiViet/index.vue')
     },
     {
-        path : '/baocaothongke/doanhso',
-        component: ()=>import('../components/QuanLy/BaoCaoThongKe/DoanhSo/index.vue')
-    },
-    {
-        path : '/baocaothongke/nguoidung',
-        component: ()=>import('../components/QuanLy/BaoCaoThongKe/NguoiDung/index.vue')
+        path : '/baocaothongke',
+        component: ()=>import('../components/QuanLy/BaoCaoThongKe/index.vue')
     },
     {
         path : '/qldm/qldmsp',
@@ -60,6 +56,14 @@ const routes = [
     {
         path : '/quanlynhacungcap',
         component: ()=>import('../components/QuanLy/QuanLyNhaCungCap/index.vue')
+    },
+    {
+        path : '/quanlydanhgia',
+        component: ()=>import('../components/QuanLy/QuanLyDanhGia/index.vue')
+    },
+    {
+        path : '/quanlythanhtoan',
+        component: ()=>import('../components/QuanLy/QuanLyThanhToan/index.vue')
     },
 ]
 
