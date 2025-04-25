@@ -9,10 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "apexcharts": "^4.7.0",
     "axios": "^1.8.4",
     "ionicons": "^7.4.0",
     "vue": "^3.3.4",
-    "vue-router": "^4.0.13"
+    "vue-router": "^4.0.13",
+    "vue3-apexcharts": "^1.8.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
