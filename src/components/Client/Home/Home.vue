@@ -10,49 +10,53 @@
             <h2 class="text-light mb-0">EXPDaNa</h2>
         </div>
         <div class="right">
-            <router-link to="/profile" class="headerButton">
-                <img src="../../../assets/img/sample/avatar/avatar1.jpg" alt="image" class="imaged w32">
+            <router-link to="/list-nhan-tin" class="headerButton">
+                <div class="frame-texting">
+                    <i class="fa-solid fa-comment"></i>
+                </div>
             </router-link>
         </div>
     </div>
     <!-- * Header -->
 
-    <!-- content name -->
-    <div class="name">
-        <h1>Xin chào Phạm Tấn Minh</h1>
-        <p>Chúc bạn có những trải nghiệm và tận hưởng tại Đà Nẵng thật tuyệt</p>
-    </div>
-
-    <!-- content search -->
-    <div>
-        <Search />
-    </div>
-
-    <div id="appCapsule" class="slider_home">
-        <div class="section mb-3">
-
-            <!-- slider -->
-            <div id="carouselExampleControlsNoTouching" class="carousel slide mb-5" data-bs-touch="false">
-                <div class="carousel-inner">
-                    <template v-for="(value, index) in slides" :key="index">
-                        <div class="carousel-item" :class="{ active: index === 0 }">
-                            <img :src="value.image" class="d-block w-100" style="height: 400px;" alt="Slide">
-                        </div>
-                    </template>
+    <div id="appCapsule">
+        <div class="section wallet-card-section pt-1">
+            <div class="wallet-card">
+                <!-- Balance -->
+                <div class="balance">
+                    <div class="left">
+                        <span class="title">Chào Phạm Tấn Minh</span>
+                        <h5 class="total">Chúc bạn có trải nghiệm thú vị tại Đà Nẵng</h5>
+                    </div>
+                    <!-- <div class="right">
+                        
+                    </div> -->
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching"
-                    data-bs-slide="prev">
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching"
-                    data-bs-slide="next">
-                    <span class="visually-hidden">Next</span>
-                </button>
+                <!-- * Balance -->
+                <!-- Wallet Footer -->
+                <div class="wallet-footer">
+                    <div class="item">
+                        <a href="/ask-search">
+                            <div class="icon-wrapper">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </div>
+                            <strong>Tìm kiếm</strong>
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="/so-check-in">
+                            <div class="icon-wrapper bg-success">
+                                <i class="fa-solid fa-book-atlas"></i>
+                            </div>
+                            <strong>Sổ check-in</strong>
+                        </a>
+                    </div>
+                </div>
+                <!-- * Wallet Footer -->
             </div>
-            <!-- slider -->
-
-            <hr>
-
+        </div>
+        
+        <div class="section mb-3">
 
             <!-- News -->
             <div class="section full mt-4 mb-3">
@@ -96,25 +100,19 @@
     <SideBar></SideBar>
     <!-- * Sidebar -->
 
-    <!--  Bottom Navigation -->
-    <!-- <BottomNav></BottomNav> -->
-    <!-- * Bottom Navigation -->
+
 
 
 </template>
 <script>
 
 import SideBar from "../../../layout/components/SideBar.vue";
-// import BottomNav from "../../../layout/components/BottomNav.vue";
-import Search from '../../../layout/components/Search.vue';
 
 
 export default {
     // name: 'app',
     components: {
         SideBar,
-        // BottomNav,
-        Search,
     },
     mounted() {
         // Multiple Carousel

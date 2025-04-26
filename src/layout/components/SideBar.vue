@@ -39,7 +39,7 @@
                                 </div>
                             </a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="/so-check-in" class="item">
                                 <div class="icon-box bg-primary">
                                     <i class="fa-solid fa-book-atlas"></i>
@@ -49,7 +49,7 @@
                                     <span class="badge badge-primary">1</span>
                                 </div>
                             </a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="/lich-su-mua-hang" class="item">
                                 <div class="icon-box bg-primary">

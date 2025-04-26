@@ -1,6 +1,7 @@
 <template>
     <router-view></router-view>
     <BottomNav></BottomNav>
+    <IconTexting></IconTexting>
 </template>
 <script>
 
@@ -8,11 +9,13 @@ import "../../assets/js/lib/bootstrap.bundle.min.js";
 import "../../assets/js/plugins/splide/splide.min.js";
 import "../../assets/js/base.js";
 import BottomNav from "../components/BottomNav.vue";
+import IconTexting from "../components/IconTexting.vue";
 
 export default {
     name: '#app',
     components: {
-        BottomNav
+        BottomNav,
+        IconTexting
     }
 }
 </script>

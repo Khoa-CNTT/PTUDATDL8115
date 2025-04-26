@@ -18,8 +18,74 @@
   .slider_home {
     padding-top: 0 !important;
   }
+  .frame-texting {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.3);
+  }
   /* Home */
   
+/* list friend texting  */
+.img-friend {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.bg-list-friend {
+  background-color: white;
+  padding: 1rem;
+}
+.info-list-friend {
+  margin-top: 10px;
+  line-height: 10px;
+}
+.setting-friend {
+  cursor: pointer;
+}
+.fa-ellipsis-vertical {
+  font-size: 18px;
+}
+.add-user {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #1e3799;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.fa-user-plus {
+  color: #dff9fb;
+  font-size: 20px;
+}
+/* list friend texting  */
+
+  /* Texting */
+  .texting {
+    position: fixed;
+    bottom: 70px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background-color: #1e3799;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .icon-texting {
+    color: #dff9fb;
+    font-size: 20px;
+  }
+  /* Texting */
+
   /* Lịch sử đơn hàng */
   .chu i {
     color: yellow;

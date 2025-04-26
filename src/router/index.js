@@ -125,6 +125,21 @@ const routes = [
         component: () =>
           import("../components/Client/QuenMK/NhapMatKhauMoi.vue"),
       },
+      {
+        path: "list-nhan-tin",
+        component: () =>
+          import("../components/Client/Texting/ListFriendTexting.vue"),
+      },
+      {
+        path: "nhan-tin",
+        component: () =>
+          import("../components/Client/Texting/Texting.vue"),
+      },
+      {
+        path: "tim-kiem-va-them-ban-be",
+        component: () =>
+          import("../components/Client/Texting/SearchAndAddFriend.vue"),
+      },
     ],
   },
   {
