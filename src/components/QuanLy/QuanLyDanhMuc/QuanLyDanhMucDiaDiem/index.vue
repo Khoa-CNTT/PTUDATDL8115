@@ -28,10 +28,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(value, index) in list_danhMucDiaDiem_filter" :key="index">
+                            <tr v-for="(value, index) in list_danhMucDiaDiem" :key="index">
                                 <td class="text-center align-middle">{{ index + 1 }}</td>
-                                <td class="text-center align-middle">{{ value.ten }}</td>
-                                <td class="text-center align-middle">{{ value.slug }}</td>
+                                <td class="text-center align-middle">{{ value.ten_danh_muc }}</td>
+                                <td class="text-center align-middle">{{ value.slug_danh_muc }}</td>
                                 <td class="text-center align-middle">
                                     <div v-if="value.tinh_trang == 1"
                                         class="badge rounded-pill text-success bg-light-success p-2 text-uppercase px-3"><i
@@ -69,11 +69,11 @@
                 <div class="modal-body">
                     <div class="mb-2">
                         <label class="mb-2">Tên danh mục địa điểm</label>
-                        <input type="text" v-model="them_dmd.ten" class="form-control" />
+                        <input type="text" v-model="them_dmd.ten_danh_muc" class="form-control" />
                     </div>
                     <div class="mb-2">
                         <label class="mb-2">Slug</label>
-                        <input type="text" v-model="them_dmd.slug" class="form-control" />
+                        <input type="text" v-model="them_dmd.slug_danh_muc" class="form-control" />
                     </div>
                     <div class="mb-2">
                         <label class="mb-2">Tình trạng</label>
@@ -103,11 +103,11 @@
                 <div class="modal-body">
                     <div class="mb-2">
                         <label class="mb-2">Tên danh mục địa điểm</label>
-                        <input type="text" v-model="sua_dmd.ten" class="form-control" />
+                        <input type="text" v-model="sua_dmd.ten_danh_muc" class="form-control" />
                     </div>
                     <div class="mb-2">
                         <label class="mb-2">Slug</label>
-                        <input type="text" v-model="sua_dmd.slug" class="form-control" />
+                        <input type="text" v-model="sua_dmd.slug_danh_muc" class="form-control" />
                     </div>
                     <div class="mb-2">
                         <label class="mb-2">Tình trạng</label>
@@ -151,17 +151,11 @@
 
 <script>
 import axios from 'axios'
-
+import { NotifiSuccess, NotifiError } from '../../../../utils/notifi.js'
 export default {
     data() {
         return {
-            list_danhMucDiaDiem: [
-                {
-                    ten: "aaa",
-                slug: "aaa",
-                tinh_trang: 1,
-                }
-            ],
+            list_danhMucDiaDiem: [],
             them_dmd: {
                 ten: "",
                 slug: "",
@@ -173,7 +167,7 @@ export default {
         }
     },
     mounted() {
-        this.loadData();
+        this.loadDataDanhMucDiaDiem();
     },
     computed: {
         list_danhMucDiaDiem_filter() {
@@ -183,9 +177,9 @@ export default {
         },
     },
     methods: {
-        loadData() {
+        loadDataDanhMucDiaDiem() {
             axios
-                .get("http://127.0.0.1:8000/api/danh-muc-dia-diem/data")
+                .get("http://127.0.0.1:8000/api/admin/danh-muc/get-data-dia-diem")
                 .then((res) => {
                     this.list_danhMucDiaDiem = res.data.data;
                 })
@@ -195,19 +189,15 @@ export default {
         },
         themDanhMucDiaDiem() {
             axios
-                .post("http://127.0.0.1:8000/api/danh-muc-dia-diem/create", this.them_dmd)
+                .post("http://127.0.0.1:8000/api/admin/danh-muc/create-dia-diem", this.them_dmd)
                 .then((res) => {
-                    if (res.data.status) {
-                        this.loadData();
-                        this.list_danhMucDiaDiem.push(this.them_dmd);
-                        alert(res.data.message);
-                    } else {
-                        alert("Thêm danh mục địa điểm thất bại");
-                    }
+                    NotifiSuccess(res, () => {
+                        this.loadDataDanhMucDiaDiem();
+                    });
                 })
                 .catch((err) => {
-                    console.log(err);
-                })
+                    NotifiError(err);
+                });
             this.them_dmd = {
                 ten: "",
                 slug: "",
@@ -216,32 +206,26 @@ export default {
         },
         suaDanhMucDiaDiem() {
             axios
-                .post("http://127.0.0.1:8000/api/danh-muc-dia-diem/update", this.sua_dmd)
+                .post("http://127.0.0.1:8000/api/admin/danh-muc/update", this.sua_dmd)
                 .then((res) => {
-                    if (res.data.status) {
-                        this.loadData();
-                        alert(res.data.message);
-                    } else {
-                        alert("Cập nhật thất bại");
-                    }
+                    NotifiSuccess(res, () => {
+                        this.loadDataDanhMucDiaDiem();
+                    });
                 })
                 .catch((err) => {
-                    console.log(err);
+                    NotifiError(err);
                 });
         },
         xoaDanhMucDiaDiem() {
             axios
-                .post("http://127.0.0.1:8000/api/danh-muc-dia-diem/delete", this.xoa_dmd)
+                .post("http://127.0.0.1:8000/api/admin/danh-muc/delete", this.xoa_dmd)
                 .then((res) => {
-                    if (res.data.status) {
-                        this.loadData();
-                        alert(res.data.message);
-                    } else {
-                        alert("Xóa danh mục địa điểm thất bại");
-                    }
+                    NotifiSuccess(res, () => {
+                        this.loadDataDanhMucDiaDiem();
+                    });
                 })
                 .catch((err) => {
-                    console.log(err);
+                    NotifiError(err);
                 });
         },
     },

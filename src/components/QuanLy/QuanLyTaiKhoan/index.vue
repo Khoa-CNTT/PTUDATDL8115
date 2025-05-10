@@ -41,11 +41,11 @@
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 16px;">
-                                        <tr v-for="(value, index) in lists_tai_khoan" :key="index">
+                                        <tr v-for="(value, index) in lists_khach_hang" :key="index">
                                             <td class="text-center">{{ index + 1 + (currentPage - 1) * itemsPerPage }}
                                             </td>
                                             <td>{{ value.ten_nguoi_dung }}</td>
-                                            <td>{{ value.ten_dang_nhap }}</td>
+                                            <td>{{ value.username }}</td>
                                             <td>{{ value.email }}</td>
                                             <td class="text-center">{{ formatDate(value.ngay_sinh) }}</td>
                                             <td class="text-center">
@@ -95,12 +95,12 @@
                         <h3 class="fs-20 text-gray-9 fw-bold mb-2 mt-1">Xoá tài khoản</h3>
                         <p class="text-gray-6 mb-0 fs-16">Bạn có chắc chắn muốn xoá tài khoản này không?</p>
                         <p class="text-gray-6 mb-0 fs-16">Sau khi xoá tài khoản này sẽ không còn hoạt động !</p>
-                        <h5 class="mt-3">{{ tai_khoan.ten_nguoi_dung }} - {{ tai_khoan.ten_dang_nhap }}</h5>
+                        <h5 class="mt-3">{{ khach_hang.ten_nguoi_dung }} - {{ khach_hang.ten_dang_nhap }}</h5>
                         <div class="modal-footer-btn mt-3 d-flex justify-content-center mt-5">
                             <button type="button" class="btn me-2 btn-secondary fs-13 fw-medium p-2 px-3 shadow-none"
                                 data-bs-dismiss="modal" style="background-color: #FF2C2C;width: 30%;">Huỷ</button>
                             <button type="submit" class="btn btn-primary fs-13 fw-medium p-2 px-3"
-                                @click="xoa_tai_khoan" style="background-color: #FE9F43;width: 30%;">Đồng ý xoá</button>
+                                @click="xoa_khach_hang" style="background-color: #FE9F43;width: 30%;">Đồng ý xoá</button>
                         </div>
                     </div>
                 </div>
@@ -121,12 +121,12 @@
                                         Thông tin cá nhân
                                     </h5>
                                     <p class="card-text fs-5"><strong>Tên người dùng:</strong> {{
-                                        tai_khoan.ten_nguoi_dung }}
+                                        khach_hang.ten_nguoi_dung }}
                                     </p>
                                     <p class="card-text fs-5"><strong>Giới tính:</strong> <span
-                                            v-if="tai_khoan.gioi_tinh == 1">Nam</span><span v-else>Nữ</span></p>
+                                            v-if="khach_hang.gioi_tinh == 1">Nam</span><span v-else>Nữ</span></p>
                                     <p class="card-text fs-5"><strong>Ngày sinh:</strong> {{
-                                        formatDate(tai_khoan.ngay_sinh) }}
+                                        formatDate(khach_hang.ngay_sinh) }}
                                     </p>
                                 </div>
                             </div>
@@ -137,10 +137,10 @@
                                     <h5 class="card-title mb-3"><i class="fa-solid fa-lock fa-xl me-2 text-success"></i>
                                         Thông tin đăng nhập
                                     </h5>
-                                    <p class="card-text fs-5"><strong>Tên đăng nhập:</strong> {{ tai_khoan.ten_dang_nhap
+                                    <p class="card-text fs-5"><strong>Tên đăng nhập:</strong> {{ khach_hang.ten_dang_nhap
                                     }}
                                     </p>
-                                    <p class="card-text fs-5"><strong>Mật khẩu:</strong> {{ tai_khoan.mat_khau }}</p>
+                                    <p class="card-text fs-5"><strong>Mật khẩu:</strong> {{ khach_hang.mat_khau }}</p>
                                 </div>
                             </div>
                         </div>
@@ -151,11 +151,11 @@
                                             class="fa-solid fa-envelope fa-xl me-2 text-info"></i>
                                         Thông tin liên hệ
                                     </h5>
-                                    <p class="card-text fs-5"><strong>Email:</strong> {{ tai_khoan.email }}</p>
-                                    <p class="card-text fs-5"><strong>Số điện thoại:</strong> {{ tai_khoan.so_dien_thoai
+                                    <p class="card-text fs-5"><strong>Email:</strong> {{ khach_hang.email }}</p>
+                                    <p class="card-text fs-5"><strong>Số điện thoại:</strong> {{ khach_hang.so_dien_thoai
                                     }}
                                     </p>
-                                    <p class="card-text fs-5"><strong>Địa chỉ:</strong> {{ tai_khoan.dia_chi }}</p>
+                                    <p class="card-text fs-5"><strong>Địa chỉ:</strong> {{ khach_hang.dia_chi }}</p>
                                 </div>
                             </div>
                         </div>
@@ -166,10 +166,10 @@
                                             class="fa-solid fa-circle-info fa-xl me-2 text-warning"></i> Thông tin khác
                                     </h5>
                                     <p class="card-text fs-5"><strong>Trạng thái:</strong> <span
-                                            v-if="tai_khoan.trang_thai == 1">Đang hoạt động</span><span v-else>Tạm
+                                            v-if="khach_hang.trang_thai == 1">Đang hoạt động</span><span v-else>Tạm
                                             khoá</span></p>
                                     <p class="card-text fs-5"><strong>Số điểm tích lũy:</strong> {{
-                                        tai_khoan.diem_tich_luy }} <i class="fa-solid fa-star fa-lg"
+                                        khach_hang.diem_tich_luy }} <i class="fa-solid fa-star fa-lg"
                                             style="color: #FFD43B;"></i></p>
                                 </div>
                             </div>
@@ -189,27 +189,28 @@ export default {
     data() {
         return {
             Luu_tam: {}, // Lưu thông tin tài khoản đã chọn
-            tai_khoan: {
-                ten_nguoi_dung: "",
-                ten_dang_nhap: "",
-                mat_khau: "",
-                email: "",
-                ngay_sinh: "",
-                dia_chi: "",
-                so_dien_thoai: "",
-                trang_thai: "",
-                diem_tich_luy: "",
-                gioi_tinh: ""
+            khach_hang: {
+                ten_nguoi_dung : '',
+                username : '',
+                email : '',
+                password : '',
+                ngay_sinh : '',
+                dia_chi : '',
+                so_dien_thoai : '',
+                trang_thai : '',
+                diem_tich_luy : '',
+                gioi_tinh : '',
+                is_active : ''
             },
             searchTerm: '', // Dữ liệu tìm kiếm 
             currentPage: 1, // Trang bắt đầu với page 1
             itemsPerPage: 10, // Giới hạn 10 dòng thông tin trên table
-            lists_tai_khoan: [
+            lists_khach_hang: [
                 
                 { ten_nguoi_dung: "Trịnh Văn S", ten_dang_nhap: "trinhvans", mat_khau: "12345678", email: "strinh@example.com", ngay_sinh: "1991-07-07", dia_chi: "101 Bạch Đằng", so_dien_thoai: "0912345696", trang_thai: 0, diem_tich_luy: 760, gioi_tinh: 1 },
                 { ten_nguoi_dung: "Bùi Thị T", ten_dang_nhap: "buithit", mat_khau: "12345678", email: "tbui@example.com", ngay_sinh: "1993-03-03", dia_chi: "33 Trần Cao Vân", so_dien_thoai: "0912345697", trang_thai: 1, diem_tich_luy: 1900, gioi_tinh: 0 }
             ],
-            luu_tai_khoan: null,
+            luu_khach_hang: null,
             modalXoa: null,
             modalXem: null,
             isSelected: false, // Trạng thái để xác định xem có chọn tài khoản nào hay không
@@ -218,13 +219,13 @@ export default {
     },
     computed: {
         list_TaiKhoan_filter() {
-            return this.lists_tai_khoan.filter((item) =>
+            return this.lists_khach_hang.filter((item) =>
                 item.ten_dang_nhap.toLowerCase().includes(this.searchQuery.toLowerCase()),
                 item.ten_nguoi_dung.toLowerCase().includes(this.searchQuery.toLowerCase())
             );
         },
         totalPages() {
-            return Math.ceil(this.lists_tai_khoan.length / this.itemsPerPage);
+            return Math.ceil(this.lists_khach_hang.length / this.itemsPerPage);
         },
         // paginatedData để điều chỉnh thông tin sao cho khi chuyển page thì thông tin theo mới
         paginatedData() {
@@ -232,11 +233,12 @@ export default {
             const end = start + this.itemsPerPage;
             return this.filteredTaiKhoan.slice(start, end);
         },
-        mounted() {
-            this.loadData()
-        },
+       
     },
-
+    mounted() {
+        this.loadData();
+       
+    },
     methods: {
         changePage(page) {
             if (page >= 1 && page <= this.totalPages) {
@@ -255,9 +257,9 @@ export default {
 
         loadData() {
             axios
-                .get("http://127.0.0.1:8000/api/admin/tai-khoan/data")
+                .get("http://127.0.0.1:8000/api/admin/khach-hang/get-data")
                 .then((res) => {
-                    this.lists_tai_khoan = res.data.data;
+                    this.lists_khach_hang = res.data.data;
                 })
                 .catch((err) => {
                     console.log(err);

@@ -29,7 +29,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(value, index) in list_donhang_filter" :key="index">
+              <tr v-for="(value, index) in list_donhang" :key="index">
                 <td class="text-center align-middle">{{ index + 1 }}</td>
                 <td class="text-center align-middle">{{ value.id_nguoi_dung }}</td>
                 <td class="text-center align-middle">{{ value.ma_don_hang }}</td>
@@ -234,24 +234,24 @@
       </div>
     </div>
   </div>
- 
+
   <div class="modal fade" id="xoadonhang" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Xóa Đơn Hàng</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Bạn có chắc chắn muốn xóa đơn hàng <strong>{{ xoa_donhang.ma_don_hang }}</strong> không?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="xoadonhang()">Xóa</button>
+    <div class="modal-dialog modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Xóa Đơn Hàng</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Bạn có chắc chắn muốn xóa đơn hàng <strong>{{ xoa_donhang.ma_don_hang }}</strong> không?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="xoadonhang()">Xóa</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 </template>
 

@@ -28,7 +28,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(value, index) in list_nhaCungCap_filter" :key="index">
+                            <tr v-for="(value, index) in list_nhaCungCap" :key="index">
                                 <td class="text-center align-middle">{{ index + 1 }}</td>
                                 <td class="text-center align-middle">{{ value.ten_nha_cung_cap }}</td>
                                 <td class="text-center align-middle">{{ value.so_dien_thoai }}</td>
@@ -150,32 +150,22 @@
 </template>
 
 <script>
+import { NotifiSuccess, NotifiError } from '../../../utils/Notifi'
 import axios from 'axios'
 export default {
     data() {
         return {
 
-            list_nhaCungCap: [
-                {
-                    ten_nha_cung_cap: "aaaa",
-
-                so_dien_thoai: "0123",
-
-                tinh_trang: 1,
-                }
-            ]
+            list_nhaCungCap: []
             ,
             them_ncc: {
                 ten_nha_cung_cap: "",
-
                 so_dien_thoai: "",
-
                 tinh_trang: 1,
             },
             sua_ncc: {},
             xoa_ncc: {},
             searchQuery: "",
-
         }
     },
     mounted() {
@@ -189,10 +179,9 @@ export default {
         },
     },
     methods: {
-
         loadData() {
             axios
-                .get("http://127.0.0.1:8000/api/admin/nha-cung-cap/data")
+                .get("http://127.0.0.1:8000/api/admin/nha-cung-cap/get-data")
                 .then((res) => {
                     this.list_nhaCungCap = res.data.data;
                 })
@@ -204,22 +193,16 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/nha-cung-cap/create", this.them_ncc)
                 .then((res) => {
-                    if (res.data.status) {
+                    NotifiSuccess(res, () => {
                         this.loadData();
-                        this.list_nhaCungCap.push(this.them_ncc);
-                        alert(res.data.message);
-                    } else {
-                        alert("Thêm nhà cung cấp thất bại");
-                    }
+                    });
                 })
                 .catch((err) => {
-                    console.log(err);
-                })
+                    NotifiError(err);
+                });
             this.them_ncc = {
                 ten_nha_cung_cap: "",
-
                 so_dien_thoai: "",
-
                 tinh_trang: 1,
             }
         },
@@ -227,30 +210,24 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/nha-cung-cap/update", this.sua_ncc)
                 .then((res) => {
-                    if (res.data.status) {
+                    NotifiSuccess(res, () => {
                         this.loadData();
-                        alert(res.data.message);
-                    } else {
-                        alert("Cập nhật thất bại");
-                    }
+                    });
                 })
                 .catch((err) => {
-                    console.log(err);
+                    NotifiError(err);
                 });
         },
         xoaNhaCungCap() {
             axios
                 .post("http://127.0.0.1:8000/api/admin/nha-cung-cap/delete", this.xoa_ncc)
                 .then((res) => {
-                    if (res.data.status) {
+                    NotifiSuccess(res, () => {
                         this.loadData();
-                        alert(res.data.message);
-                    } else {
-                        alert("Xóa nhà cung cấp thất bại");
-                    }
+                    });
                 })
                 .catch((err) => {
-                    console.log(err);
+                    NotifiError(err);
                 });
         },
 

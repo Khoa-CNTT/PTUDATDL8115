@@ -33,13 +33,13 @@
                                 <th class="text-center">Số lượng</th>
                                 <th class="text-center">Đơn giá</th>
                                 <th class="text-center">Điểm</th>
-                                <th class="text-center">Danh mục</th>
-                                <th class="text-center">Nhà cung cấp</th>
+                                <!-- <th class="text-center">Danh mục</th>
+                                <th class="text-center">Nhà cung cấp</th> -->
                                 <th class="text-center">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(value, index) in list_san_pham" :key="index"
+                            <tr v-for="(value, index) in lists_san_pham" :key="index"
                                 style="vertical-align: middle;font-size: 16px;">
                                 <td class="text-center">
                                     <h6 class="mb-0 font-14">{{ index + 1 + (currentPage - 1) * itemsPerPage }}</h6>
@@ -58,8 +58,8 @@
                                 <td class="text-center">{{ value.so_luong }}</td>
                                 <td class="text-center">{{ value.gia }} vnđ</td>
                                 <td class="text-center">{{ value.sao }}</td>
-                                <td class="text-center">{{ value.danh_muc }}</td>
-                                <td class="text-center">{{ value.nha_cung_cap }}</td>
+                                <!-- <td class="text-center">{{ value.danh_muc }}</td>
+                                <td class="text-center">{{ value.nha_cung_cap }}</td> -->
                                 <td>
                                     <div class="d-flex order-actions justify-content-center">
                                         <!-- <a href="javascript:;" class="ms-3" data-bs-toggle="modal"
@@ -69,7 +69,7 @@
                                             data-bs-target="#ModalXoaSanPham" @click="prepareDelete(index)"><i
                                                 class='bx bxs-trash'></i></a> -->
                                         <button class="btn btn-warning me-2" data-bs-toggle="modal"
-                                        data-bs-target="#ModalSuaSanPham">Sửa</button>
+                                        data-bs-target="#ModalSuaSanPham" v-on:click="Object.assign(sua_sp,value)">Sửa</button>
                                         <button class="btn btn-danger" data-bs-toggle="modal"
                                         data-bs-target="#ModalXoaSanPham" v-on:click="Object.assign(xoasanpham,value)">Xóa</button>
                                     </div>
@@ -96,11 +96,6 @@
                         <div class="col-lg-6">
                             <div class="p-4 rounded">
                                 <div class="mb-3">
-                                    <label for="add_ma_san_pham" class="form-label">Mã sản phẩm</label>
-                                    <input type="text" class="form-control" id="add_ma_san_pham"
-                                        v-model="san_pham.ma_san_pham" placeholder="Nhập mã sản phẩm">
-                                </div>
-                                <div class="mb-3">
                                     <label for="add_ten_san_pham" class="form-label">Tên sản phẩm</label>
                                     <input type="text" class="form-control" id="add_ten_san_pham"
                                         v-model="san_pham.ten_san_pham" placeholder="Nhập tên sản phẩm">
@@ -114,7 +109,7 @@
                                     <label class="form-label">Hình ảnh</label>
                                     <div class="input-group mb-2">
                                         <input type="text" class="form-control" placeholder="Nhập link hình ảnh"
-                                            v-model="imageLink">
+                                            v-model="san_pham.hinh_anh">
                                         <button class="btn btn-outline-secondary" type="button" id="uploadButton"
                                             @click="triggerFileInput">
                                             Chọn tệp
@@ -140,7 +135,7 @@
                             <div class="p-4 rounded">
                                 <div class="mb-3">
                                     <label for="add_don_gia" class="form-label">Đơn giá</label>
-                                    <input type="text" class="form-control" id="add_don_gia" v-model="san_pham.gia"
+                                    <input type="text" class="form-control" id="add_don_gia" v-model="san_pham.gia_ban"
                                         placeholder="Nhập đơn giá">
                                 </div>
                                 <div class="mb-3">
@@ -149,19 +144,19 @@
                                         v-model="san_pham.so_luong" placeholder="Nhập số lượng">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="add_sao" class="form-label">Điểm</label>
-                                    <input type="number" class="form-control" id="add_sao" v-model="san_pham.sao"
+                                    <label for="add_sao" class="form-label">Phần trăm tích điểm</label>
+                                    <input type="number" class="form-control" id="add_phan_tram_tich_diem" v-model="san_pham.phan_tram_tich_diem"
                                         placeholder="Nhập điểm">
                                 </div>
-                                <div class="mb-3">
+                                <!-- <div class="mb-3">
                                     <label for="add_danh_muc" class="form-label">Danh mục</label>
                                     <input type="text" class="form-control" id="add_danh_muc"
                                         v-model="san_pham.danh_muc" placeholder="Nhập danh mục">
-                                </div>
+                                </div> -->
                                 <div class="col-12">
                                     <label for="add_nha_cung_cap" class="form-label">Nhà cung cấp</label>
-                                    <input type="text" class="form-control" id="add_nha_cung_cap"
-                                        v-model="san_pham.nha_cung_cap" placeholder="Nhập nhà cung cấp">
+                                    <input type="n" class="form-control" id="add_nha_cung_cap"
+                                        v-model="san_pham.id_nha_cung_cap" placeholder="Nhập nhà cung cấp">
                                 </div>
                             </div>
                         </div>
@@ -170,8 +165,8 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                         style="background-color: #FF2C2C; width: 15%;">Huỷ</button>
-                    <button type="button" class="btn btn-primary" style="background-color: #58D0C1; width: 15%;"
-                        @click="them_san_pham">Tạo sản phẩm mới</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" style="background-color: #58D0C1; width: 15%;"
+                        @click="themSanPham()">Tạo sản phẩm mới</button>
                 </div>
             </div>
         </div>
@@ -190,19 +185,19 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="p-4 rounded">
-                                <div class="mb-3">
+                                <!-- <div class="mb-3">
                                     <label for="edit_ma_san_pham" class="form-label">Mã sản phẩm</label>
                                     <input type="text" class="form-control" id="edit_ma_san_pham"
-                                        v-model="san_pham.ma_san_pham" placeholder="Nhập mã sản phẩm" readonly>
-                                </div>
+                                        v-model="sua_sp.ma_san_pham" placeholder="Nhập mã sản phẩm" readonly>
+                                </div> -->
                                 <div class="mb-3">
                                     <label for="edit_ten_san_pham" class="form-label">Tên sản phẩm</label>
                                     <input type="text" class="form-control" id="edit_ten_san_pham"
-                                        v-model="san_pham.ten_san_pham" placeholder="Nhập tên sản phẩm">
+                                        v-model="sua_sp.ten_san_pham" placeholder="Nhập tên sản phẩm">
                                 </div>
                                 <div class="mb-3">
                                     <label for="edit_mo_ta" class="form-label">Mô tả</label>
-                                    <textarea class="form-control" id="edit_mo_ta" rows="3" v-model="san_pham.mo_ta"
+                                    <textarea class="form-control" id="edit_mo_ta" rows="3" v-model="sua_sp.mo_ta"
                                         placeholder="Nhập mô tả sản phẩm"></textarea>
                                 </div>
                                 <div class="mb-3">
@@ -221,8 +216,8 @@
                                         <img :src="imagePreview" alt="Hình ảnh xem trước"
                                             style="max-width: 150px; max-height: 150px; border-radius: 5px;">
                                     </div>
-                                    <div v-else-if="san_pham.hinh_anh" class="mt-2">
-                                        <img :src="san_pham.hinh_anh" alt="Hình ảnh hiện tại"
+                                    <div v-else-if="sua_sp.hinh_anh" class="mt-2">
+                                        <img :src="sua_sp.hinh_anh" alt="Hình ảnh hiện tại"
                                             style="max-width: 150px; max-height: 150px; border-radius: 5px;border: 1px solid #000000;">
                                     </div>
                                     <div v-else class="mt-2">
@@ -234,29 +229,29 @@
                         <div class="col-lg-6">
                             <div class="p-4 rounded">
                                 <div class="mb-3">
-                                    <label for="edit_don_gia" class="form-label">Đơn giá</label>
-                                    <input type="text" class="form-control" id="edit_don_gia" v-model="san_pham.gia"
+                                    <label for="edit_don_gia" class="form-label">Giá bán</label>
+                                    <input type="text" class="form-control" id="edit_don_gia" v-model="sua_sp.gia_ban"
                                         placeholder="Nhập đơn giá">
                                 </div>
                                 <div class="mb-3">
                                     <label for="edit_so_luong" class="form-label">Số lượng</label>
                                     <input type="number" class="form-control" id="edit_so_luong"
-                                        v-model="san_pham.so_luong" placeholder="Nhập số lượng">
+                                        v-model="sua_sp.so_luong" placeholder="Nhập số lượng">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="edit_sao" class="form-label">Điểm</label>
-                                    <input type="number" class="form-control" id="edit_sao" v-model="san_pham.sao"
+                                    <label for="edit_sao" class="form-label">Phần trăm tích điểm</label>
+                                    <input type="number" class="form-control" id="edit_phan_tram_tich_diem" v-model="sua_sp.phan_tram_tich_diem"
                                         placeholder="Nhập điểm">
                                 </div>
-                                <div class="mb-3">
+                                <!-- <div class="mb-3">
                                     <label for="edit_danh_muc" class="form-label">Danh mục</label>
                                     <input type="text" class="form-control" id="edit_danh_muc"
-                                        v-model="san_pham.danh_muc" placeholder="Nhập danh mục">
-                                </div>
+                                        v-model="sua_sp.danh_muc" placeholder="Nhập danh mục">
+                                </div> -->
                                 <div class="col-12">
                                     <label for="edit_nha_cung_cap" class="form-label">Nhà cung cấp</label>
                                     <input type="text" class="form-control" id="edit_nha_cung_cap"
-                                        v-model="san_pham.nha_cung_cap" placeholder="Nhập nhà cung cấp">
+                                        v-model="sua_sp.id_nha_cung_cap" placeholder="Nhập nhà cung cấp">
                                 </div>
                             </div>
                         </div>
@@ -265,8 +260,8 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                         style="background-color: #FF2C2C;width: 15%;">Huỷ</button>
-                    <button type="button" class="btn btn-primary" style="background-color: #FE9F43;width: 15%;"
-                        @click="sua_san_pham">Lưu chỉnh sửa</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" style="background-color: #FE9F43;width: 15%;"
+                        @click="suaSanPham()">Lưu chỉnh sửa</button>
                 </div>
             </div>
         </div>
@@ -288,7 +283,7 @@
                         <div class="modal-footer-btn mt-3 d-flex justify-content-center mt-5">
                             <button type="button" class="btn me-2 btn-secondary fs-13 fw-medium p-2 px-3 shadow-none"
                                 data-bs-dismiss="modal" style="background-color: #FF2C2C;width: 30%;">Huỷ</button>
-                            <button type="submit" class="btn btn-primary fs-13 fw-medium p-2 px-3" v-on:click="xoaSanPham()"
+                            <button type="submit" class="btn btn-primary fs-13 fw-medium p-2 px-3" data-bs-dismiss="modal" v-on:click="xoaSanPham()"
                                 style="background-color: #FE9F43;width: 30%;">Đồng ý xoá</button>
                         </div>
                     </div>
@@ -316,110 +311,11 @@
 </template>
 <script>
 import axios from 'axios'
+import { NotifiSuccess, NotifiError } from '../../../utils/notifi.js'
 export default {
     data() {
         return {
-            list_san_pham: [
-                {
-                    hinh_anh: "https://pos.nvncdn.com/f4d87e-8901/ps/20241204_SMAM3J8dpt.jpeg",
-                    ten_san_pham: "Áo khoác",
-                    sao: 200,
-                    danh_muc: "Giải trí",
-                    nha_cung_cap: "Puma",
-                    mo_ta: "Áo khoác mùa đông chống gió, giữ ấm tốt.",
-                    gia: "200.000",
-                    so_luong: 10,
-                    ma_san_pham: "SP001"   // Mã sản phẩm
-                },
-                {
-                    hinh_anh: "https://img.bitas.com.vn/sanpham/ZGOM.20/NAU/lg1.png",
-                    ten_san_pham: "Giày thể thao",
-                    sao: 150,
-                    danh_muc: "Giải trí",
-                    nha_cung_cap: "Puma",
-                    mo_ta: "Giày thể thao nhẹ, thoáng khí, phù hợp tập luyện.",
-                    gia: "350.000",
-                    so_luong: 20,
-                    ma_san_pham: "SP002"   // Mã sản phẩm
-                },
-                {
-                    hinh_anh: "https://kakavietnam.com/wp-content/uploads/2018/03/kk-2070-1.jpg",
-                    ten_san_pham: "Balo du lịch",
-                    sao: 180,
-                    danh_muc: "Giải trí",
-                    nha_cung_cap: "Puma",
-                    mo_ta: "Balo chống nước, phù hợp cho du lịch và công việc.",
-                    gia: "500.000",
-                    so_luong: 15,
-                    ma_san_pham: "SP003"   // Mã sản phẩm
-                },
-                {
-                    hinh_anh: "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/x/i/xiaomi_2_1.png",
-                    ten_san_pham: "Đồng hồ thông minh",
-                    sao: 300,
-                    danh_muc: "Giải trí",
-                    nha_cung_cap: "Puma",
-                    mo_ta: "Đồng hồ thông minh với nhiều tính năng sức khỏe.",
-                    gia: "1.200.000",
-                    so_luong: 8,
-                    ma_san_pham: "SP004"   // Mã sản phẩm
-                },
-                {
-                    hinh_anh: "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/x/i/xiaomi_2_1.png",
-                    ten_san_pham: "Điện thoại Xiaomi",
-                    sao: 350,
-                    danh_muc: "Điện tử",
-                    nha_cung_cap: "Xiaomi",
-                    mo_ta: "Điện thoại thông minh cấu hình mạnh mẽ.",
-                    gia: "5.500.000",
-                    so_luong: 12,
-                    ma_san_pham: "SP005"   // Mã sản phẩm
-                },
-                {
-                    hinh_anh: "https://cdn.tgdd.vn/Products/Images/42/251848/samsung-galaxy-tab-s7-fe-wifi-1-600x600.jpg",
-                    ten_san_pham: "Máy tính bảng Samsung",
-                    sao: 280,
-                    danh_muc: "Điện tử",
-                    nha_cung_cap: "Samsung",
-                    mo_ta: "Máy tính bảng màn hình lớn, pin trâu.",
-                    gia: "8.000.000",
-                    so_luong: 7,
-                    ma_san_pham: "SP006"   // Mã sản phẩm
-                },
-                {
-                    hinh_anh: "https://pos.nvncdn.com/f4d87e-8901/ps/20241204_SMAM3J8dpt.jpeg",
-                    ten_san_pham: "Áo thun nam",
-                    sao: 120,
-                    danh_muc: "Thời trang",
-                    nha_cung_cap: "Adidas",
-                    mo_ta: "Áo thun cotton thoáng mát.",
-                    gia: "250.000",
-                    so_luong: 30,
-                    ma_san_pham: "SP007"   // Mã sản phẩm
-                },
-                {
-                    hinh_anh: "https://img.bitas.com.vn/sanpham/ZGOM.20/NAU/lg1.png",
-                    ten_san_pham: "Giày sandal nữ",
-                    sao: 190,
-                    danh_muc: "Thời trang",
-                    nha_cung_cap: "Bitas",
-                    mo_ta: "Sandal thoải mái đi hàng ngày.",
-                    gia: "400.000",
-                    so_luong: 25,
-                    ma_san_pham: "SP008"   // Mã sản phẩm
-                },
-                {
-                    hinh_anh: "https://kakavietnam.com/wp-content/uploads/2018/03/kk-2070-1.jpg",
-                    ten_san_pham: "Túi xách công sở",
-                    sao: 220,
-                    danh_muc: "Phụ kiện",
-                    nha_cung_cap: "Kakavietnam",
-                    mo_ta: "Túi da sang trọng cho dân văn phòng.",
-                    gia: "700.000",
-                    so_luong: 10,
-                    ma_san_pham: "SP009"   // Mã sản phẩm
-                },
-            ],
+            lists_san_pham: [],
             san_pham: {
                 hinh_anh: "",
                 ten_san_pham: "",
@@ -431,6 +327,7 @@ export default {
                 danh_muc: "",
                 nha_cung_cap: "",
             },
+            sua_sp:{},
             searchTerm: '',
             currentPage: 1,
             itemsPerPage: 8,
@@ -453,10 +350,14 @@ export default {
             );
         },
     },
+    mounted() {
+        this.loadData();
+        
+    },
     methods: {
         loadData() {
             axios
-                .get("http://127.0.0.1:8000/api/admin/san-pham/data")
+                .get("http://127.0.0.1:8000/api/admin/san-pham/get-data")
                 .then((res) => {
                     this.lists_san_pham = res.data.data;
                 })
@@ -466,58 +367,48 @@ export default {
         },
         themSanPham() {
             axios
-                .post("http://127.0.0.1:8000/api/admin/san-pham/create", this.them_dd)
+                .post("http://127.0.0.1:8000/api/admin/san-pham/create", this.san_pham)
                 .then((res) => {
-                    if (res.data.status) {
+                    NotifiSuccess(res, () => {
                         this.loadData();
-                        this.lists_san_pham.push(this.them_dd);
-                        alert(res.data.message);
-                    } else {
-                        alert("Thêm sản phẩm thất bại");
-                    }
+                    });
                 })
                 .catch((err) => {
-                    console.log(err);
-                })
-            this.them_dd = {
-                id_dia_diem: "",
-                ten_dia_diem: "",
-                hinh_anh: "",
-                mo_ta: "",
-                tinh_trang: 1,
-                dia_chi: "",
-                toa_do: "",
-                danh_muc: "",
+                    NotifiError(err);
+                });
+            this.san_pham = {
+                ten_san_pham : '',
+                hinh_anh : '',
+                mo_ta : '',
+                gia_ban : '',
+                phan_tram_tich_diem : '',
+                id_danh_muc : '',
+                so_luong : '',
+                id_nha_cung_cap: ''
             }
         },
         suaSanPham() {
             axios
-                .post("http://127.0.0.1:8000/api/admin/san-pham/update", this.sua_dd)
+                .post("http://127.0.0.1:8000/api/admin/san-pham/update", this.sua_sp)
                 .then((res) => {
-                    if (res.data.status) {
+                    NotifiSuccess(res, () => {
                         this.loadData();
-                        alert(res.data.message);
-                    } else {
-                        alert("Cập nhật thất bại");
-                    }
+                    });
                 })
                 .catch((err) => {
-                    console.log(err);
+                    NotifiError(err);
                 });
         },
         xoaSanPham() {
             axios
-                .post("http://127.0.0.1:8000/api/admin/san-pham/delete", this.xoa_dd)
+                .post("http://127.0.0.1:8000/api/admin/san-pham/delete", this.xoasanpham)
                 .then((res) => {
-                    if (res.data.status) {
+                    NotifiSuccess(res, () => {
                         this.loadData();
-                        alert(res.data.message);
-                    } else {
-                        alert("Xóa sản phẩm thất bại");
-                    }
+                    });
                 })
                 .catch((err) => {
-                    console.log(err);
+                    NotifiError(err);
                 });
         },
     },
